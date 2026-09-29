@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Registrasi Pengguna - RIFORA</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #f3f6f9;
+            --bg-card: #ffffff;
+            --bg-soft: #f7f9fb;
+
+            --text-main: #243447;
+            --text-secondary: #687786;
+            --text-muted: #8994a0;
+
+            --primary: #17365d;
+            --primary-hover: #245a8d;
+
+            --border: #dce3e9;
+
+            --input-bg: #ffffff;
+
+            --error-bg: #fcebec;
+            --error-border: #f1c4c7;
+            --error-text: #a52834;
+
+            --shadow:
+                0 20px 55px rgba(31, 52, 73, 0.12);
+        }
+
+        html[data-theme="dark"] {
+            --bg-main: #0e151c;
+            --bg-card: #17212b;
+            --bg-soft: #1d2a35;
+
+            --text-main: #edf3f7;
+            --text-secondary: #b3c0c9;
+            --text-muted: #8d9ba6;
+
+            --primary: #5f91bd;
+            --primary-hover: #78a8cf;
+
+            --border: #30404c;
+
+            --input-bg: #111a22;
+
+            --error-bg: #321d22;
+            --error-border: #683139;
+            --error-text: #f0a4aa;
+
+            --shadow:
+                0 20px 55px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 24px;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                var(--bg-main);
+
+            color:
+                var(--text-main);
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition:
+                background-color 0.3s ease,
+                color 0.3s ease;
+        }
+
+        /* =====================================================
+           BACKGROUND
+        ===================================================== */
+
+        .rifora-bg {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            background-image:
+                linear-gradient(
+                    rgba(23, 54, 93, 0.04) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(23, 54, 93, 0.04) 1px,
+                    transparent 1px
+                );
+
+            background-size: 32px 32px;
+        }
+
+        html[data-theme="dark"] .rifora-bg {
+
+            background-image:
+                linear-gradient(
+                    rgba(141, 180, 216, 0.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(141, 180, 216, 0.035) 1px,
+                    transparent 1px
+                );
+        }
+
+        .rifora-bg::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: -20%;
+            left: -10%;
+
+            width: 70%;
+            height: 70%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(23, 54, 93, 0.06) 0%,
+                    transparent 70%
+                );
+
+            border-radius: 50%;
+        }
+
+        .rifora-bg::after {
+
+            content: "";
+
+            position: absolute;
+
+            right: -10%;
+            bottom: -20%;
+
+            width: 80%;
+            height: 80%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(36, 90, 141, 0.06) 0%,
+                    transparent 70%
+                );
+
+            border-radius: 50%;
+        }
+
+        .data-curve {
+
+            position: absolute;
+
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+
+            height: 55vh;
+
+            min-height: 300px;
+        }
+
+        /* =====================================================
+           CONTAINER
+        ===================================================== */
+
+        .register-container {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            position: relative;
+
+            z-index: 1;
+        }
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .register-card {
+
+            position: relative;
+
+            background:
+                var(--bg-card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 20px;
+
+            padding: 42px;
+
+            box-shadow:
+                var(--shadow);
+
+            transition:
+                background-color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+
+            position: absolute;
+
+            top: 20px;
+            right: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 50%;
+
+            background:
+                var(--bg-soft);
+
+            color:
+                var(--text-main);
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background-color 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+
+            transform:
+                translateY(-2px);
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+
+            text-align: center;
+
+            padding:
+                10px 45px 0;
+
+            margin-bottom: 30px;
+        }
+
+        .brand-mark {
+
+            width: 54px;
+            height: 54px;
+
+            margin:
+                0 auto 17px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                var(--primary);
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+        .header h1 {
+
+            margin:
+                0 0 9px;
+
+            font-size: 27px;
+
+            line-height: 1.25;
+
+            font-weight: 700;
+
+            color:
+                var(--text-main);
+        }
+
+        .header p {
+
+            margin: 0;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+
+            color:
+                var(--text-secondary);
+        }
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-group {
+
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 650;
+
+            color:
+                var(--text-main);
+        }
+
+        .form-group input {
+
+            width: 100%;
+
+            height: 48px;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            outline: none;
+
+            background:
+                var(--input-bg);
+
+            color:
+                var(--text-main);
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background-color 0.3s ease,
+                color 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+
+            color:
+                var(--text-muted);
+        }
+
+        .form-group input:focus {
+
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(36, 90, 141, 0.12);
+        }
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .error {
+
+            margin-bottom: 20px;
+
+            padding:
+                12px 14px;
+
+            border:
+                1px solid var(--error-border);
+
+            border-radius: 8px;
+
+            background:
+                var(--error-bg);
+
+            color:
+                var(--error-text);
+
+            font-size: 13px;
+
+            line-height: 1.55;
+        }
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .button {
+
+            width: 100%;
+
+            height: 48px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background:
+                var(--primary);
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 650;
+
+            cursor: pointer;
+
+            transition:
+                background-color 0.2s ease,
+                transform 0.1s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .button:hover {
+
+            background:
+                var(--primary-hover);
+
+            box-shadow:
+                0 8px 20px
+                rgba(23, 54, 93, 0.18);
+        }
+
+        .button:active {
+
+            transform:
+                translateY(1px);
+        }
+
+        /* =====================================================
+           LOGIN LINK
+        ===================================================== */
+
+        .login-link {
+
+            margin-top: 22px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            color:
+                var(--text-secondary);
+        }
+
+        .login-link a {
+
+            color:
+                var(--primary);
+
+            font-weight: 650;
+
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+
+            color:
+                var(--primary-hover);
+
+            text-decoration: underline;
+        }
+
+        /* =====================================================
+           INFORMATION
+        ===================================================== */
+
+        .information {
+
+            margin-top: 20px;
+
+            padding-top: 17px;
+
+            border-top:
+                1px solid var(--border);
+
+            text-align: center;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            color:
+                var(--text-muted);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 520px) {
+
+            body {
+
+                padding: 12px;
+            }
+
+            .register-card {
+
+                padding:
+                    34px 25px;
+            }
+
+            .header {
+
+                padding:
+                    10px 35px 0;
+            }
+
+            .header h1 {
+
+                font-size: 24px;
+            }
+
+            .header p {
+
+                font-size: 13px;
+            }
+
+            .theme-toggle {
+
+                top: 16px;
+                right: 16px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="rifora-bg">
+
+    <svg
+        class="data-curve rifora-animated-curve"
+        viewBox="0 0 1440 400"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+
+        <path
+            fill="none"
+            stroke="rgba(23, 54, 93, 0.15)"
+            stroke-width="4"
+            d="M0,300 C200,100 400,400 700,200 C1000,0 1200,300 1440,150"
+        ></path>
+
+        <path
+            fill="none"
+            stroke="rgba(23, 54, 93, 0.10)"
+            stroke-width="3"
+            d="M0,350 C300,150 500,450 900,150 C1200,-50 1300,350 1440,250"
+        ></path>
+
+        <path
+            fill="none"
+            stroke="rgba(36, 90, 141, 0.08)"
+            stroke-width="2.5"
+            d="M0,250 C250,50 450,350 800,250 C1100,150 1250,250 1440,50"
+        ></path>
+
+    </svg>
+
+</div>
+
+
+<div class="register-container">
+
+    <div class="register-card">
+
+
+        <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Ubah tema"
+            title="Ubah tema"
+        >
+            ☾
+        </button>
+
+
+        <div class="header">
+
+        
+
+            <h1>
+                Registrasi Pengguna RIFORA
+            </h1>
+
+            <p>
+                Sistem Indeks Perkembangan Harga
+                Kabupaten Cirebon
+            </p>
+
+        </div>
+
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="post">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                    autocomplete="username"
+                    placeholder="Masukkan username"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ google_email }}"
+                    required
+                    autocomplete="email"
+                    placeholder="Masukkan email aktif"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                    placeholder="Masukkan password"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password2">
+                    Konfirmasi Password
+                </label>
+
+                <input
+    type="password"
+    id="password2"
+    name="password2"
+    required
+    autocomplete="new-password"
+    placeholder="Ulangi password"
+>
+
+
+
+
+            <button
+                type="submit"
+                class="button"
+            >
+                Daftar
+            </button>
+
+        </form>
+
+        <div class="google-divider">atau</div>
+
+
+        <div class="login-link">
+
+            Sudah memiliki akun?
+
+            <a href="{% url 'login' %}">
+                Masuk
+            </a>
+
+        </div>
+
+
+        <footer class="information">
+
+           ©2026 RIFORA. All rights reserved.
+
+        </footer>
+
+    </div>
+
+</div>
+
+
+<script>
+
+(function () {
+
+    const savedTheme =
+        localStorage.getItem("rifora-theme");
+
+    const systemPrefersDark =
+        window.matchMedia &&
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches;
+
+    const initialTheme =
+        savedTheme ||
+        (systemPrefersDark ? "dark" : "light");
+
+
+    document.documentElement.setAttribute(
+        "data-theme",
+        initialTheme
+    );
+
+
+    const toggle =
+        document.getElementById("themeToggle");
+
+
+    if (!toggle) {
+        return;
+    }
+
+
+    function updateIcon() {
+
+        const currentTheme =
+            document.documentElement.getAttribute(
+                "data-theme"
+            );
+
+
+        if (currentTheme === "dark") {
+
+            toggle.textContent = "☀";
+
+            toggle.setAttribute(
+                "aria-label",
+                "Aktifkan mode terang"
+            );
+
+            toggle.setAttribute(
+                "title",
+                "Aktifkan mode terang"
+            );
+
+        } else {
+
+            toggle.textContent = "☾";
+
+            toggle.setAttribute(
+                "aria-label",
+                "Aktifkan mode gelap"
+            );
+
+            toggle.setAttribute(
+                "title",
+                "Aktifkan mode gelap"
+            );
+
+        }
+
+    }
+
+
+    updateIcon();
+
+
+    toggle.addEventListener(
+        "click",
+        function () {
+
+            const currentTheme =
+                document.documentElement.getAttribute(
+                    "data-theme"
+                );
+
+
+            const newTheme =
+                currentTheme === "dark"
+                    ? "light"
+                    : "dark";
+
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                newTheme
+            );
+
+
+            localStorage.setItem(
+                "rifora-theme",
+                newTheme
+            );
+
+
+            updateIcon();
+
+        }
+    );
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
+<style>
+/* RIFORA — login-style wave; only the strokes animate */
+.rifora-animated-curve{position:fixed;left:0;bottom:0;width:100%;height:55vh;min-height:300px;z-index:0;pointer-events:none;overflow:hidden}
+.rifora-animated-curve path{transform-box:fill-box;transform-origin:center;animation:riforaRealWave 12s ease-in-out infinite alternate}
+.rifora-animated-curve path:nth-child(2){animation-duration:15s;animation-delay:-3s}.rifora-animated-curve path:nth-child(3){animation-duration:18s;animation-delay:-7s}
+@keyframes riforaRealWave{0%{transform:translate3d(-2.5%,1.2%,0) scaleY(.97)}50%{transform:translate3d(0,-1.5%,0) scaleY(1.025)}100%{transform:translate3d(2.5%,1%,0) scaleY(.98)}}
+html[data-theme="dark"] .rifora-animated-curve path:nth-child(1){stroke:rgba(141,180,216,.38);stroke-width:5}html[data-theme="dark"] .rifora-animated-curve path:nth-child(2){stroke:rgba(141,180,216,.27);stroke-width:4}html[data-theme="dark"] .rifora-animated-curve path:nth-child(3){stroke:rgba(95,145,189,.22);stroke-width:3.5}
+@media (prefers-reduced-motion:reduce){.rifora-animated-curve path{animation:none}}
+
+        .google-divider { display:flex; align-items:center; gap:10px; margin:18px 0 14px; color:#89949b; font-size:12px; }
+        .google-divider::before, .google-divider::after { content:""; flex:1; height:1px; background:#dce3e8; }
+        .google-button { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:10px 16px; border:1px solid #d5dce1; border-radius:7px; background:#fff; color:#263238; text-decoration:none; font-size:13.5px; font-weight:600; transition:background .2s ease, border-color .2s ease, transform .15s ease; }
+        .google-button:hover { background:#f6f8fa; border-color:#c5ced5; transform:translateY(-1px); }
+        .google-icon { width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; font-weight:800; color:#4285f4; font-size:16px; }
+        html[data-theme="dark"] .google-divider::before, html[data-theme="dark"] .google-divider::after { background:#30404c; }
+        html[data-theme="dark"] .google-button { background:#1d2a35; border-color:#30404c; color:#edf3f7; }
+        html[data-theme="dark"] .google-button:hover { background:#243441; }
+
+</style>

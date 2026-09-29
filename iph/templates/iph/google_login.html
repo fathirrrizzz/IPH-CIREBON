@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Masuk dengan Google - RIFORA</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;font-family:"Segoe UI",Arial,sans-serif;background:#f3f6f9;color:#243447}.card{width:min(460px,100%);background:#fff;border:1px solid #dce3e9;border-radius:16px;padding:34px;box-shadow:0 20px 55px rgba(31,52,73,.12);text-align:center}.logo{width:190px;max-width:75%;height:auto;margin:0 auto 18px}.card h1{font-size:24px;margin:0 0 8px;color:#17365d}.card p{font-size:13px;line-height:1.6;color:#687786;margin:0 0 22px}.google-button{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 16px;border:1px solid #d5dce1;border-radius:8px;background:#fff;color:#263238;text-decoration:none;font-size:14px;font-weight:650}.google-button:hover{background:#f6f8fa}.g{font-size:18px;font-weight:800;color:#4285f4}.back{display:inline-block;margin-top:18px;color:#17365d;text-decoration:none;font-size:12px;font-weight:600}
+html[data-theme="dark"] body{background:#0e151c;color:#edf3f7}html[data-theme="dark"] .card{background:#17212b;border-color:#30404c;box-shadow:0 20px 55px rgba(0,0,0,.35)}html[data-theme="dark"] .card h1{color:#78a8cf}html[data-theme="dark"] .card p{color:#b3c0c9}html[data-theme="dark"] .google-button{background:#1d2a35;border-color:#30404c;color:#edf3f7}html[data-theme="dark"] .back{color:#78a8cf}
+</style></head><body>
+<div class="card"><img class="logo" src="{% static 'iph/images/rifora-logo.svg' %}" alt="RIFORA"><h1>Masuk dengan Google</h1><p>Gunakan akun Google untuk melanjutkan ke RIFORA. Jika akun Google dikonfigurasi pada server, identitas email dari akun tersebut dapat digunakan untuk mengisi data pengguna secara otomatis.</p><a class="google-button" href="/accounts/google/login/?process=login"><span class="g">G</span>Masuk dengan akun Google</a><a class="back" href="{% url 'login' %}">← Kembali ke halaman masuk</a></div>
+</body></html>

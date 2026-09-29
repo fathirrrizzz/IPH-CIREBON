@@ -1,0 +1,1670 @@
+```html
+<!DOCTYPE html>
+{% load static %}
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Generate Infografis - RIFORA</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           THEME
+        ===================================================== */
+
+        :root {
+
+            --rifora-bg-main:
+                #f3f6f9;
+
+            --rifora-grid:
+                rgba(23, 54, 93, 0.035);
+
+            --rifora-card:
+                #ffffff;
+
+            --rifora-soft:
+                #f7f9fb;
+
+            --rifora-text:
+                #243447;
+
+            --rifora-secondary:
+                #687786;
+
+            --rifora-muted:
+                #8994a0;
+
+            --rifora-border:
+                #dce3e9;
+
+            --rifora-sidebar:
+                #ffffff;
+
+            --rifora-sidebar-hover:
+                #edf3f8;
+
+            --rifora-primary:
+                #174a7e;
+
+            --rifora-primary-dark:
+                #123b65;
+
+            --rifora-error-bg:
+                #fff1f1;
+
+            --rifora-error-border:
+                #e6caca;
+
+            --rifora-error-text:
+                #a13c3c;
+
+            --rifora-shadow:
+                0 16px 40px
+                rgba(31, 52, 73, 0.08);
+
+            /* TOPBAR LOGO */
+            --rifora-logo-bg:
+                #ffffff;
+
+            --rifora-logo-filter:
+                none;
+
+        }
+
+
+        /* =====================================================
+           DARK THEME
+        ===================================================== */
+
+        html[data-theme="dark"] {
+
+            --rifora-bg-main:
+                #0e151c;
+
+            --rifora-grid:
+                rgba(141, 180, 216, 0.035);
+
+            --rifora-card:
+                #17212b;
+
+            --rifora-soft:
+                #1d2a35;
+
+            --rifora-text:
+                #edf3f7;
+
+            --rifora-secondary:
+                #b3c0c9;
+
+            --rifora-muted:
+                #8d9ba6;
+
+            --rifora-border:
+                #30404c;
+
+            --rifora-sidebar:
+                #17212b;
+
+            --rifora-sidebar-hover:
+                #1d2a35;
+
+            --rifora-primary:
+                #78a8cf;
+
+            --rifora-primary-dark:
+                #5e91b8;
+
+            --rifora-error-bg:
+                #321d22;
+
+            --rifora-error-border:
+                #683139;
+
+            --rifora-error-text:
+                #f0a4aa;
+
+            --rifora-shadow:
+                0 16px 40px
+                rgba(0, 0, 0, 0.30);
+
+            /* TOPBAR LOGO */
+            --rifora-logo-bg:
+                #17212b;
+
+            --rifora-logo-filter:
+                invert(1);
+
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        html,
+        body {
+
+            min-height: 100%;
+
+        }
+
+
+        html {
+
+            margin: 0;
+            padding: 0;
+
+        }
+
+
+        body {
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    min-height: 100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        var(--rifora-bg-main);
+
+    color:
+        var(--rifora-text);
+
+    transition:
+        background-color .3s ease,
+        color .3s ease;
+
+}
+
+
+        a {
+
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           FIXED BACKGROUND
+           SAMA DENGAN UPLOAD DATA
+        ===================================================== */
+
+        .page-background {
+
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            overflow: hidden;
+
+            background-color:
+                var(--rifora-bg-main);
+
+            background-image:
+
+                linear-gradient(
+                    var(--rifora-grid) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    var(--rifora-grid) 1px,
+                    transparent 1px
+                );
+
+            background-size:
+                32px 32px;
+
+            transition:
+                background-color .3s ease;
+
+        }
+
+
+        .page-background::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: -20%;
+            left: -10%;
+
+            width: 70%;
+            height: 70%;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(23, 54, 93, .06) 0%,
+                    transparent 70%
+                );
+
+        }
+
+
+        .page-background::after {
+
+            content: "";
+
+            position: absolute;
+
+            right: -10%;
+            bottom: -20%;
+
+            width: 80%;
+            height: 80%;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(36, 90, 141, .06) 0%,
+                    transparent 70%
+                );
+
+        }
+
+
+        html[data-theme="dark"]
+        .page-background::before {
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(95, 145, 189, .08) 0%,
+                    transparent 70%
+                );
+
+        }
+
+
+        html[data-theme="dark"]
+        .page-background::after {
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(95, 145, 189, .07) 0%,
+                    transparent 70%
+                );
+
+        }
+
+
+        /* =====================================================
+           DATA CURVE
+           SAMA NUANSA BACKGROUND UPLOAD DATA
+        ===================================================== */
+
+        .data-curve {
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+
+            height: 55vh;
+
+            min-height: 300px;
+
+            transform-origin:
+                center center;
+
+            animation:
+                riforaWaveFloat
+                16s
+                ease-in-out
+                infinite
+                alternate;
+
+        }
+
+
+        @keyframes riforaWaveFloat {
+
+            0% {
+
+                transform:
+                    translate3d(-2%, 0, 0)
+                    scaleY(.98);
+
+            }
+
+            50% {
+
+                transform:
+                    translate3d(0%, -1.5%, 0)
+                    scaleY(1.01);
+
+            }
+
+            100% {
+
+                transform:
+                    translate3d(2%, 0, 0)
+                    scaleY(.98);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+           HANYA BAGIAN TOPBAR YANG DIPERBAIKI
+        ===================================================== */
+
+        .topbar {
+    position: relative;
+
+    margin-top: -20px !important;
+
+    min-height: 74px;
+
+    width: 100%;
+
+    padding:
+        14px
+        28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 14px;
+
+    background:
+        var(--rifora-sidebar);
+
+    border-bottom:
+        1px solid
+        var(--rifora-border);
+
+    z-index: 900;
+
+    isolation: isolate;
+
+    transition:
+        background-color .3s ease,
+        border-color .3s ease;
+}
+
+
+        /* =====================================================
+           BRAND
+        ===================================================== */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            min-width: 0;
+
+        }
+
+
+        /* =====================================================
+           LOGO WRAPPER
+           BACKGROUND MENGIKUTI TEMA
+        ===================================================== */
+
+        .brand-logo-wrap {
+
+            width: 48px;
+            height: 48px;
+
+            flex:
+                0 0 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                var(--rifora-logo-bg);
+
+            border: none;
+
+            border-radius: 8px;
+
+            transition:
+                background-color .3s ease;
+
+        }
+
+
+        /* =====================================================
+           LOGO
+           
+           LIGHT:
+           logo tetap normal
+
+           DARK:
+           putih pada SVG menjadi gelap
+           huruf/grafis R menjadi terang
+        ===================================================== */
+
+        .brand-logo {
+
+            width: 48px;
+            height: 48px;
+
+            display: block;
+
+            object-fit: contain;
+
+            background:
+                transparent !important;
+
+            border: none !important;
+
+            outline: none !important;
+
+            box-shadow: none !important;
+
+            filter:
+                var(--rifora-logo-filter);
+
+            transition:
+                filter .3s ease;
+
+        }
+
+
+        /* =====================================================
+           BRAND TEXT
+        ===================================================== */
+
+        .brand-text {
+
+            display: flex;
+
+            flex-direction: column;
+
+            min-width: 0;
+
+        }
+
+
+        .brand-name {
+
+            font-size: 19px;
+
+            line-height: 1.2;
+
+            font-weight: 700;
+
+            letter-spacing: .4px;
+
+            color:
+                var(--rifora-primary);
+
+            transition:
+                color .3s ease;
+
+        }
+
+
+        .brand-subtitle {
+
+            margin-top: 3px;
+
+            font-size: 11px;
+
+            line-height: 1.3;
+
+            white-space: nowrap;
+
+            color:
+                var(--rifora-secondary);
+
+            transition:
+                color .3s ease;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR ACTIONS
+        ===================================================== */
+
+        .topbar-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+
+            width: 38px;
+            height: 38px;
+
+            flex:
+                0 0 38px;
+
+            border:
+                1px solid
+                var(--rifora-border);
+
+            border-radius: 50%;
+
+            background:
+                var(--rifora-sidebar-hover);
+
+            color:
+                var(--rifora-secondary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            line-height: 1;
+
+            transition:
+                background .2s ease,
+                color .2s ease,
+                transform .2s ease;
+
+        }
+
+
+        .theme-toggle:hover {
+
+            color:
+                var(--rifora-primary);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        .logout {
+
+            flex:
+                0 0 auto;
+
+            padding:
+                8px
+                14px;
+
+            border:
+                1px solid
+                var(--rifora-border);
+
+            border-radius: 7px;
+
+            background:
+                var(--rifora-sidebar-hover);
+
+            color:
+                var(--rifora-secondary);
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+            transition:
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease;
+
+        }
+
+
+        .logout:hover {
+
+            background:
+                var(--rifora-card);
+
+            color:
+                var(--rifora-primary);
+
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ===================================================== */
+
+        .container {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+
+            max-width: 1150px;
+
+            margin:
+                0 auto;
+
+            padding:
+                42px
+                25px
+                60px;
+
+        }
+
+
+        /* =====================================================
+           MAIN CARD
+        ===================================================== */
+
+        .card {
+
+            background:
+                var(--rifora-card);
+
+            border:
+                1px solid
+                var(--rifora-border);
+
+            border-radius: 12px;
+
+            padding: 34px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, .035);
+
+            transition:
+                background-color .3s ease,
+                border-color .3s ease;
+
+        }
+
+
+        /* =====================================================
+           LABEL
+        ===================================================== */
+
+        .label {
+
+            margin-bottom: 8px;
+
+            color:
+                var(--rifora-primary);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing:
+                .4px;
+
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        h1 {
+
+            margin: 0;
+
+            font-size: 30px;
+
+            line-height: 1.25;
+
+            color:
+                var(--rifora-text);
+
+        }
+
+
+        /* =====================================================
+           DESCRIPTION
+        ===================================================== */
+
+        .description {
+
+            margin:
+                10px
+                0
+                0;
+
+            max-width: 760px;
+
+            color:
+                var(--rifora-secondary);
+
+            font-size: 15px;
+
+            line-height: 1.75;
+
+        }
+
+
+        /* =====================================================
+           GENERATE BOX
+        ===================================================== */
+
+        .generate-box {
+
+            margin-top: 30px;
+
+            padding: 34px;
+
+            border:
+                1px solid
+                var(--rifora-border);
+
+            border-radius: 10px;
+
+            background:
+                var(--rifora-soft);
+
+            text-align: center;
+
+            transition:
+                background-color .3s ease,
+                border-color .3s ease;
+
+        }
+
+
+        .generate-box p {
+
+            margin:
+                0
+                0
+                22px;
+
+            color:
+                var(--rifora-secondary);
+
+            font-size: 15px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =====================================================
+           GENERATE BUTTON
+        ===================================================== */
+
+        .generate-button {
+
+            display: inline-block;
+
+            min-width: 220px;
+
+            padding:
+                13px
+                24px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background:
+                var(--rifora-primary);
+
+            color:
+                #ffffff;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            font-weight: 650;
+
+            cursor: pointer;
+
+            transition:
+                background-color .2s ease,
+                transform .1s ease,
+                box-shadow .2s ease;
+
+        }
+
+
+        .generate-button:hover {
+
+            background:
+                var(--rifora-primary-dark);
+
+            box-shadow:
+                0 8px 20px
+                rgba(23, 54, 93, .18);
+
+        }
+
+
+        .generate-button:active {
+
+            transform:
+                translateY(1px);
+
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        .error {
+
+            margin-top: 22px;
+
+            padding:
+                14px
+                16px;
+
+            border:
+                1px solid
+                var(--rifora-error-border);
+
+            border-radius: 8px;
+
+            background:
+                var(--rifora-error-bg);
+
+            color:
+                var(--rifora-error-text);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           RESULT
+        ===================================================== */
+
+        .result {
+
+            margin-top: 34px;
+
+            padding-top: 30px;
+
+            border-top:
+                1px solid
+                var(--rifora-border);
+
+            text-align: center;
+
+        }
+
+
+        .result h2 {
+
+            margin:
+                0
+                0
+                20px;
+
+            font-size: 21px;
+
+            color:
+                var(--rifora-text);
+
+        }
+
+
+        .result img {
+
+            display: block;
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            height: auto;
+
+            margin:
+                0
+                auto;
+
+            border:
+                1px solid
+                var(--rifora-border);
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 0, 0, .08);
+
+        }
+
+
+        /* =====================================================
+           DOWNLOAD
+        ===================================================== */
+
+        .download {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding:
+                11px
+                20px;
+
+            border-radius: 8px;
+
+            background:
+                var(--rifora-primary);
+
+            color:
+                #ffffff;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 650;
+
+        }
+
+
+        .download:hover {
+
+            background:
+                var(--rifora-primary-dark);
+
+        }
+
+
+        /* =====================================================
+           FOOTER NAVIGATION
+           RECTANGLE SENDIRI
+        ===================================================== */
+
+        .footer-navigation {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-top: 25px;
+
+            padding:
+                14px
+                16px;
+
+            background:
+                var(--rifora-card);
+
+            border:
+                1px solid
+                var(--rifora-border);
+
+            border-radius: 10px;
+
+            transition:
+                background-color .3s ease,
+                border-color .3s ease;
+
+        }
+
+
+        .footer-navigation .back {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                10px
+                16px;
+
+            border:
+                1px solid
+                var(--rifora-border);
+
+            border-radius: 8px;
+
+            background:
+                transparent;
+
+            color:
+                var(--rifora-primary);
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            transition:
+                background-color .2s ease,
+                border-color .2s ease,
+                color .2s ease,
+                transform .2s ease;
+
+        }
+
+
+        .footer-navigation .back:hover {
+
+            background:
+                var(--rifora-sidebar-hover);
+
+            border-color:
+                var(--rifora-primary);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .rifora-footer {
+
+            text-align: center;
+
+            margin:
+                28px
+                0
+                8px;
+
+            padding-bottom: 4px;
+
+            font-size: 11.5px;
+
+            line-height: 1.4;
+
+            color:
+                var(--rifora-muted);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .topbar {
+
+                padding:
+                    14px
+                    20px;
+
+            }
+
+
+            .brand-subtitle {
+
+                display: none;
+
+            }
+
+
+            .container {
+
+                padding:
+                    25px
+                    15px
+                    45px;
+
+            }
+
+
+            .card {
+
+                padding:
+                    24px
+                    20px;
+
+            }
+
+
+            .generate-box {
+
+                padding:
+                    25px
+                    18px;
+
+            }
+
+
+            h1 {
+
+                font-size: 26px;
+
+            }
+
+
+            .description {
+
+                font-size: 14px;
+
+            }
+
+
+            .topbar-actions {
+
+                gap: 6px;
+
+            }
+
+
+            .logout {
+
+                padding:
+                    7px
+                    10px;
+
+                font-size: 12px;
+
+            }
+
+
+            .footer-navigation {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+
+            .footer-navigation .back {
+
+                width: 100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .topbar {
+
+                min-height: 68px;
+
+            }
+
+
+            .brand-logo-wrap {
+
+                width: 40px;
+                height: 40px;
+
+                flex-basis: 40px;
+
+            }
+
+
+            .brand-logo {
+
+                width: 40px;
+                height: 40px;
+
+            }
+
+
+            .brand-name {
+
+                font-size: 18px;
+
+            }
+
+
+            .theme-toggle {
+
+                width: 34px;
+                height: 34px;
+
+                flex-basis: 34px;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           REDUCE MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .data-curve {
+
+                animation: none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="page-background">
+
+    <svg
+        class="data-curve"
+        viewBox="0 0 1440 400"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+
+        <path
+            fill="none"
+            stroke="rgba(23, 54, 93, 0.15)"
+            stroke-width="4"
+            d="M0,300 C200,100 400,400 700,200 C1000,0 1200,300 1440,150"
+        ></path>
+
+
+        <path
+            fill="none"
+            stroke="rgba(23, 54, 93, 0.10)"
+            stroke-width="3"
+            d="M0,350 C300,150 500,450 900,150 C1200,-50 1300,350 1440,250"
+        ></path>
+
+
+        <path
+            fill="none"
+            stroke="rgba(36, 90, 141, 0.08)"
+            stroke-width="2.5"
+            d="M0,250 C250,50 450,350 800,250 C1100,150 1250,250 1440,50"
+        ></path>
+
+    </svg>
+
+</div>
+
+
+<!-- =========================================================
+     TOPBAR
+========================================================= -->
+
+<header class="topbar">
+
+
+    <div class="brand">
+
+
+        <div class="brand-logo-wrap">
+
+            <img
+                class="brand-logo"
+                src="{% static 'iph/images/rifora-logo.svg' %}"
+                alt="RIFORA"
+            >
+
+        </div>
+
+
+        <div class="brand-text">
+
+            <div class="brand-name">
+                RIFORA
+            </div>
+
+
+            <div class="brand-subtitle">
+                Regional Index, Fluctuation Observation,
+                &amp; Reporting Application
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="topbar-actions">
+
+
+        <button
+            type="button"
+            class="theme-toggle"
+            id="themeToggle"
+            title="Ubah tema"
+            aria-label="Ubah tema"
+        >
+            ☾
+        </button>
+
+
+        <a
+            href="{% url 'logout' %}"
+            class="logout"
+        >
+            Keluar
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+    <section class="card">
+
+
+        <div class="label">
+            OUTPUT INFORMASI
+        </div>
+
+
+        <h1>
+            Generate Infografis
+        </h1>
+
+
+        <p class="description">
+
+            Buat infografis perkembangan
+            Indeks Perkembangan Harga Kabupaten
+            Cirebon berdasarkan data yang telah
+            tersedia pada Dashboard RIFORA
+
+        </p>
+
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <div class="generate-box">
+
+
+            <p>
+
+                Data terbaru akan digunakan untuk
+                menghasilkan infografis sesuai
+                template RIFORA.
+
+            </p>
+
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                <button
+                    type="submit"
+                    class="generate-button"
+                >
+                    Generate Infografis
+                </button>
+
+            </form>
+
+        </div>
+
+
+        {% if output_url %}
+
+            <div class="result">
+
+
+                <h2>
+                    Infografis Berhasil Dibuat
+                </h2>
+
+
+                <img
+                    src="{{ output_url }}"
+                    alt="Infografis IPH RIFORA"
+                >
+
+
+                <a
+                    href="{{ output_url }}"
+                    download
+                    class="download"
+                >
+                    Simpan Infografis
+                </a>
+
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             FOOTER NAVIGATION
+        ================================================== -->
+
+        <div class="footer-navigation">
+
+
+            <a
+                href="{% url 'home' %}"
+                class="back"
+            >
+                ← Kembali ke Home
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="rifora-footer">
+        @RIFORA 2026. All rights reserved.
+    </footer>
+
+
+</main>
+
+
+<!-- =========================================================
+     THEME SCRIPT
+========================================================= -->
+
+<script>
+
+(function () {
+
+    const savedTheme =
+        localStorage.getItem(
+            "rifora-theme"
+        );
+
+
+    const systemDark =
+        window.matchMedia &&
+        window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches;
+
+
+    const initialTheme =
+        savedTheme ||
+        (systemDark ? "dark" : "light");
+
+
+    document.documentElement.setAttribute(
+        "data-theme",
+        initialTheme
+    );
+
+
+    const toggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+
+    if (!toggle) {
+        return;
+    }
+
+
+    function updateIcon() {
+
+        const currentTheme =
+            document.documentElement
+            .getAttribute(
+                "data-theme"
+            );
+
+
+        toggle.textContent =
+            currentTheme === "dark"
+                ? "☀"
+                : "☾";
+
+
+        toggle.title =
+            currentTheme === "dark"
+                ? "Aktifkan mode terang"
+                : "Aktifkan mode gelap";
+
+    }
+
+
+    updateIcon();
+
+
+    toggle.addEventListener(
+        "click",
+        function () {
+
+            const currentTheme =
+                document.documentElement
+                .getAttribute(
+                    "data-theme"
+                );
+
+
+            const newTheme =
+                currentTheme === "dark"
+                    ? "light"
+                    : "dark";
+
+
+            document.documentElement.setAttribute(
+                "data-theme",
+                newTheme
+            );
+
+
+            localStorage.setItem(
+                "rifora-theme",
+                newTheme
+            );
+
+
+            updateIcon();
+
+        }
+    );
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
+```
